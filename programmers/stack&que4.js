@@ -26,14 +26,10 @@ function solution(bridge_length, weight, truck_weights) {
             });
             if (sum > weight) {
                 stack.pop();
-                stack.forEach(value => {
-                    value[1]--;
-                })
-                answer--;
-                stack
+                if (stack[0][1] > bridge_length) stack.shift();
                 break;
             } else {
-                if (stack[0][1] > 100) stack.shift();
+                if (stack[0][1] > bridge_length) stack.shift();
                 index++;
             }
         }
