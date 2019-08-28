@@ -3,8 +3,10 @@ function solution(progresses, speeds) {
     var temp = [];
     while(1){
         progresses.forEach((e,i) => {
-            e += speeds[i];
-            if(e>=100)
+            if(e<100){
+                e += speeds[i];
+                if(e>=100) temp.push(i);
+            }
         });
         
     }
