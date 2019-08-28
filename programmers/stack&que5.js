@@ -8,7 +8,7 @@ function solution(progresses, speeds) {
                 if(e>=100) temp.push(i);
             }
         });
-        
+        console.log(temp);
     }
     return answer;
 }
