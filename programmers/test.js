@@ -18,5 +18,13 @@
 //     value[1]++;
 // });
 // console.log(a);
-var arr = [];
-console.log(arr.length);
+// var arr = [];
+// console.log(arr.length);
+// var arr = [3, 30, 34, 5, 9];
+// console.log(`${arr[1]}`[1]>9);
+let n = 2;
+if(--n===0){
+    console.log('true: '+n);
+} else {
+    console.log('false: '+n)
+}
