@@ -13,8 +13,10 @@
 // var a=1, b=0;
 // b += (a--);
 // console.log(a,b);
-var a = [[0,0], [0,1], [0,2]];
-a.forEach(value=>{
-    value[1]++;
-});
-console.log(a);
+// var a = [[0,0], [0,1], [0,2]];
+// a.forEach(value=>{
+//     value[1]++;
+// });
+// console.log(a);
+var arr = [];
+console.log(arr.length);
