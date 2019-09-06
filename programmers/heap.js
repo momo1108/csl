@@ -44,9 +44,11 @@ function solution(jobs) {
         }
         if(jobs.length===0) {
             const acc = (accumulator, currentValue) => accumulator + currentValue;
+            console.log(sum);
+            console.log(sum.reduce(acc));
             console.log(sum.reduce(acc)/sum.length);
             return sum.reduce(acc)/sum.length;
         }
     }
 }
-solution([[0, 3], [1, 9], [2, 6]]);
+solution([[0, 3], [1, 9], [2, 6], [4, 14], [3, 18], [6, 3]]);
