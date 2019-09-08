@@ -43,3 +43,6 @@ console.log(num.toString().length);
 
 let str = "abc";
 console.log(str.substring(2,str.length));
+
+arr.slice(2,5);
+console.log(arr.slice(2,5));
