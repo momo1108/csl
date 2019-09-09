@@ -1,9 +1,11 @@
 function solution(numbers) {
     var answer = 0;
     let numstr = numbers.toString();
-    let arr = numstr.split("");
-    arr.sort((a,b)=>b-a);
-    console.log(arr);
+    let length = numstr.length;
+    let max = numstr.split("").sort((a,b)=>b-a)[0];
+    for(let i=0; i<length; i++){
+        
+    }
     return answer;
 }
-solution(1564981651)
+solution(15649)
