@@ -1,7 +1,15 @@
-var arr = [["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]];
-var arr2=[];
-for(let i=0;i<arr.length;i++){
-    arr2.push(arr[i][1]);
+function solution(clothes) {
+    var answer = 1;
+    var sort = {};
+    clothes.forEach(e=>{
+        if(!sort[e[1]]) sort[e[1]]=1;
+        else sort[e[1]]++;
+    })
+    for(var x in sort){
+        console.log(sort);
+        answer *= (sort[x]+1);
+    }
+    console.log(answer-1);
+    return answer-1;
 }
-var arr3 = arr2.sort();
-console.log(arr3);
+solution([["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]])

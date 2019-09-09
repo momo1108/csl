@@ -29,20 +29,24 @@
 //     console.log('false: '+n)
 // }
 
-let n = 5;
-console.log(n/2);
+// let n = 5;
+// console.log(n/2);
 
-let arr = [1,2,3,4,5,6];
-arr.map(e=>{
-    return e*2;
-})
+// let arr = [1,2,3,4,5,6];
+// arr.map(e=>{
+//     return e*2;
+// })
 
-let num = 123;
+// let num = 123;
 
-console.log(num.toString().length);
+// console.log(num.toString().length);
 
-let str = "abc";
-console.log(str.substring(2,str.length));
+// let str = "abc";
+// console.log(str.substring(2,str.length));
 
-arr.slice(2,5);
-console.log(arr.slice(2,5));
+// arr.slice(2,5);
+// console.log(arr.slice(2,5));
+
+// console.log(parseInt("011"));
+
+console.log((15).toString().length);
