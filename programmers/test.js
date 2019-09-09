@@ -49,4 +49,8 @@
 
 // console.log(parseInt("011"));
 
-console.log((15).toString().length);
+// console.log((15).toString().length);
+
+let str = "It's";
+str+=" me";
+console.log(str)
