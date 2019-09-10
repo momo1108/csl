@@ -51,6 +51,13 @@
 
 // console.log((15).toString().length);
 
-let str = "It's";
-str+=" me";
-console.log(str)
+// let str = "It's";
+// str+=" me";
+// console.log(str)
+
+// console.log(3%4);
+
+// console.log(!true);
+// console.log(7+7*6+7*6*5+7*6*5*4+7*6*5*4*3+7*6*5*4*3*2*2)
+let arr = [123214,12313];
+console.log(arr[0].toString().split(""));
