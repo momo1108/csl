@@ -1,0 +1,19 @@
+package kr.bang.test;
+
+import java.util.Scanner;
+
+public class Debugging1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		double first;
+		double second;
+		double timesDouble;
+		int timesInt;
+		Scanner s = new Scanner(System.in);
+		first = s.nextDouble();
+		second = s.nextDouble();
+		System.out.println(first+' '+second);
+	}
+
+}

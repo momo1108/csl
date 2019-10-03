@@ -1,0 +1,19 @@
+package kr.bang.test;
+
+import java.util.Scanner;
+
+public class Condition2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		int[] numArr;
+		numArr = new int[2];
+		for(int i=0; i<numArr.length; i++) {
+			numArr[i] = s.nextInt();
+		}
+		if(numArr[0]>numArr[1]) System.out.println(numArr[0]-numArr[1]);
+		else System.out.println(numArr[1]-numArr[0]);
+	}
+
+}

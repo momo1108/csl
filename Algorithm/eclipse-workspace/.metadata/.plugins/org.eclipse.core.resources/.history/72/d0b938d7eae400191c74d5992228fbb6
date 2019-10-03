@@ -1,0 +1,48 @@
+package kr.jaen.test;
+
+import java.io.FileInputStream;
+import java.util.Scanner;
+
+public class Solution13 {
+	static int T, N;
+	static int Answer;
+	public static void check(char[][] area, int a, int b) {
+		for(int i=a-1; i<=a+1; i++) {
+			for(int j=b-1; j<=b+1; j++) {
+				if(area[i][j] == 'G') return;
+			}
+		}
+		Answer = 0;
+		for(char[] building : area) {
+			if(building[b]=='B') Answer++;
+		}
+		for(char building : area[a]) {
+			if(building=='B') Answer++;
+		}
+		Answer--;
+		return;
+	}
+	public static void main(String[] args) throws Exception{
+		System.setIn(new FileInputStream("Solution13.txt"));
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		for(int test_case = 1; test_case <= T; test_case++)
+		{
+			N = sc.nextInt();
+			Answer = 2;
+			char[][] area=new char[N][N];
+			for(int i=0; i<N; i++) {
+				for(int j=0; j<N; j++) {
+					area[i][j] = sc.next().charAt(0);
+				}
+			}
+			//////////////////////////////
+			//( 이 부분에 알고리즘 구현을 한다. )//
+			//////////////////////////////
+			f
+			
+			
+			System.out.println("#"+test_case+" "+Answer);
+		}
+	}
+}

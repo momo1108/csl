@@ -1,0 +1,14 @@
+package kr.bang.stepup;
+
+public class Snippet {
+	public static void main(String[] args) {
+		if(Si-1<1) {
+								Answer--;
+								out = true;
+								return;
+							} else {
+								Si--;
+							}
+	}
+}
+

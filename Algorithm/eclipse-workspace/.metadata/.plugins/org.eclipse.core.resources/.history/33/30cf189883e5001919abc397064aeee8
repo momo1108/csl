@@ -1,0 +1,17 @@
+package kr.bang.stepup;
+
+import java.util.Scanner;
+
+public class Decrypt {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		String key;
+		String[] str = new String[0];
+		key = s.next();
+		str.add(s.next());
+		while(true) {
+			
+		}
+	}
+}

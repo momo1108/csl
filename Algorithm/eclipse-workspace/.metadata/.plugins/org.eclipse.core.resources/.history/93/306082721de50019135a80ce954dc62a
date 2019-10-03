@@ -1,0 +1,54 @@
+package kr.jaen.test;
+
+import java.io.FileInputStream;
+import java.util.Scanner;
+
+public class Solution31 {
+	static int Answer;
+	static int X, Y, N;
+	public static void move(int[] player, int[][] room) {
+		for(int i=0; i<player[2]; i++) {
+			int direction, move;
+			direction = 
+		}
+	}
+	public static void main(String[] args) throws Exception {
+		System.setIn(new FileInputStream("Solution31.txt"));
+		Scanner sc = new Scanner(System.in);
+
+		int T = sc.nextInt(); // Test case
+
+		// fill up the data
+		for (int test_case = 1; test_case <= T; test_case++) {
+
+			X = sc.nextInt(); // position row
+			Y = sc.nextInt(); // position col
+			N = sc.nextInt(); // number of player
+
+			int[][] room = new int[X + 1][Y + 1];// because start from 1;
+			// fill up table
+			for (int i = 1; i <= X; i++) {
+				for (int j = 1; j <= Y; j++) {
+					room[i][j] = sc.nextInt();
+				}
+			}
+
+			int[][] player = new int[N][3];
+			for (int i = 0; i < N; i++) {
+				player[i][0] = sc.nextInt(); // coord X
+				player[i][1] = sc.nextInt(); // coord Y
+				player[i][2] = sc.nextInt(); // steps
+			}
+			//////////////////////////////
+			//( 이 부분에 알고리즘 구현을 한다. )//
+			//////////////////////////////
+			for(int[] e : player) {
+				move(e, room);
+			}
+			
+			
+			System.out.println("#" + test_case + " " + Answer);
+		}
+
+	}
+}

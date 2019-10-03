@@ -1,0 +1,16 @@
+package kr.bang.test;
+
+import java.util.Scanner;
+
+public class Gugu {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		int start, end;
+		start = s.nextInt();
+		end = s.nextInt();
+		
+	}
+
+}

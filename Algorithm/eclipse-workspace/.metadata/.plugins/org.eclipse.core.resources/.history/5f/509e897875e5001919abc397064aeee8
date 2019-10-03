@@ -1,0 +1,44 @@
+package kr.bang.stepup;
+
+import java.util.Scanner;
+
+public class Gugu {
+	public static void gugudan(int[] arr) {
+		for(int i=1; i<10; i++) {
+			for(int e : arr) {
+				System.out.printf("%d * %d = %2d   ",e,i,e*i);
+			}
+			System.out.println();
+		}
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		int a = 0;
+		int b = 0;
+		while(a<2 || a>9 || b<2 || b>9) {
+			a = s.nextInt();
+			b = s.nextInt();			
+		}
+		if(a==b) {
+			System.out.printf("%d, %d",a,b);
+			int[] guguarr = new int[1];
+			gugudan(guguarr);
+		} else if(a>b) {
+			int[] guguarr = new int[a-b]; 
+			for(int i=a; i<=b; i++) {
+				guguarr[i-a] = i; 
+			}
+			gugudan(guguarr);
+		} else {
+			int[] guguarr = new int[b-a]; 
+			for(int i=b; i>=a; i--) {
+				guguarr[b-i] = i; 
+			}
+			gugudan(guguarr);
+		}
+		
+		
+	}
+
+}
