@@ -1,0 +1,9 @@
+package kr.bang.stepup;
+
+import java.util.Scanner;
+
+public class NumberBaseball {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+	}
+}

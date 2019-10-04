@@ -4,6 +4,8 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		int a = '1';
+		System.out.println(a);
 		int n=10; // 1. 선언문
 		n=n+5; // 2. 대입문
 		System.out.println("안녕하세요~");

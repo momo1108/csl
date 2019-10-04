@@ -1,0 +1,34 @@
+package kr.bang.stepup;
+
+import java.util.Scanner;
+
+public class Ricecake {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int day = s.nextInt();
+		int after = s.nextInt();
+		int count;
+		int before, temp;
+		boolean correct;
+		
+		for(int i=(after/2)+1; i<after; i++) {
+			correct = true;
+			count = 2;
+			before = i;
+			while(correct) {
+				if(count==day) {
+					System.out.println(before);
+					System.out.println(after);
+					return;
+				}
+				temp = after - before;
+				after = before;
+				before = temp;
+				if(before>=after) {
+					correct = false;
+				}
+				count++;
+			}
+		}
+	}
+}

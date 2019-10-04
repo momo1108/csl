@@ -1,0 +1,27 @@
+package kr.bang.stepup;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class CardGame {
+	public static void main(String[] args) {
+		// '1' = 49
+		Scanner s = new Scanner(System.in);
+		String[] card = new String[5];
+		int Answer = 0;
+		for(int i=0; i<5; i++) {
+			card[i] = s.nextLine();
+		}
+		Arrays.sort(card);
+		// 색깔이 모두 같은경우와 그렇지 않은 경우로 나누자.
+		if(card[0].charAt(0)==card[0].charAt(1) && card[0].charAt(0)==card[0].charAt(2) && card[0].charAt(0)==card[0].charAt(3) && card[0].charAt(0)==card[0].charAt(4)) {
+//			Answer = 
+			for(int i=1; i<5; i++) {
+				if(card[i-1].charAt(2)+1==card[i].charAt(2)) {}
+				else {
+					
+				}
+			}
+		}
+	}
+}
