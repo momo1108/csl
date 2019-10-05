@@ -1,0 +1,12 @@
+package kr.jaen.test;
+
+import java.io.FileInputStream;
+
+public class Solution1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("Solution11.txt"));
+	}
+
+}

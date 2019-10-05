@@ -19,13 +19,17 @@ public class NumberBaseball {
 					if(victim.charAt(i)==e.charAt(j)) ball++;
 				}
 			}
-			System.out.printf("strike : %d, ball : %d, question_strike : %c, question_ball : %c\n",strike,ball,e.charAt(4),e.charAt(6));
-			if((char)strike-48==e.charAt(4) && (char)ball-48==e.charAt(6)) Answer++;
+			if((char)strike+48==e.charAt(4) && (char)ball+48==e.charAt(6)) {
+				//System.out.printf("\n%s - strike : %d, ball : %d, question : %s\n",victim, strike,ball,e);
+			} else return;
 		}
+		//System.out.println(victim);
+		Answer++;
 	}
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
-		int N = s.nextLine().charAt(0)-48;
+		int N = s.nextInt();
+		s.nextLine();
 		String victim;
 		String[] question = new String[N];
 		/*
