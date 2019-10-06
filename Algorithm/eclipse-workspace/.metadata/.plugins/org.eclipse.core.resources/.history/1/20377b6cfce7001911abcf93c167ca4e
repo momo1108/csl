@@ -1,0 +1,10 @@
+package kr.bang.algorithm;
+
+public class NQueen {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -24,11 +24,11 @@ public class Solution2 {
 			int y = 0;
 			for(int a=0; a<line; a++){
 				if(s.nextInt()==0) {
-					yArr[y]=s.nextInt();
-					y++;
-				} else {
 					xArr[x]=s.nextInt();
 					x++;
+				} else {
+					yArr[y]=s.nextInt();
+					y++;
 				}
 			}
 			Arrays.sort(xArr);
