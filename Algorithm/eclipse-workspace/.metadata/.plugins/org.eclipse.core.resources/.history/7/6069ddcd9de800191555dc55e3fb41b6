@@ -1,0 +1,17 @@
+package kr.bang.algorithm;
+
+import java.util.Scanner;
+
+public class NQueen {
+	static int N;
+	public static void locate(int line) {
+		// 0~3 열에 각각 퀸을 놓을 경우를 생각하기 위해서 반복문을 사용해준다.
+		if(line==N)
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		N = s.nextInt();
+	}
+
+}

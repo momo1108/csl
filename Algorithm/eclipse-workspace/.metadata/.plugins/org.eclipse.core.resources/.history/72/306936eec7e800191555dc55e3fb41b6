@@ -1,0 +1,18 @@
+package kr.bang.algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Jangi {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		Queue<Integer> queue = new LinkedList<>();//Å¥ »ý¼º
+		queue.offer(9);
+		System.out.println(String.format("peek: %d", queue.peek()));//peek
+		System.out.println(String.format("peek: %d", queue.peek()));//peek
+		System.out.println(String.format("peek: %d", queue.peek()));//peek
+		System.out.println(String.format("peek: %d", queue.peek()));//peek
+	}
+	
+}

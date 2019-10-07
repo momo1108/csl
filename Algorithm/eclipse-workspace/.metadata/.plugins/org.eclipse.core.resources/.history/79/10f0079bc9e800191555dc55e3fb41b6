@@ -1,0 +1,21 @@
+package kr.bang.algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Jangi {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		Queue<Integer[]> queue = new LinkedList<>();//큐 생성
+		int N, M;
+		N = s.nextInt();
+		M = s.nextInt();
+		int current = s.nextInt()*(M-1) + s.nextInt();
+		int destination = s.nextInt()*(M-1) + s.nextInt();
+		System.out.println(current);
+		// 함수는 똑같이 동작하도록 만들어놓고 위치와 실행 횟수를 같이 저장하는 큐를 만들자.
+		
+	}
+	
+}
