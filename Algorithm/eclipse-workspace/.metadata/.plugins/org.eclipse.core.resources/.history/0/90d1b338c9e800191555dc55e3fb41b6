@@ -1,0 +1,17 @@
+package kr.bang.algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Jangi {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		Queue<Integer> queue = new LinkedList<>();//Å¥ »ý¼º
+		int N, M;
+		N = s.nextInt();
+		M = s.nextInt();
+		
+	}
+	
+}
