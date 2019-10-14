@@ -362,9 +362,10 @@ app.$watch(function (){
 
 Vue.js 템플릿 문법에서 중요한 것은 다음 2가지 개념이다.
 
-#### 1. Mustache 문법을 이용한 데이터 전개
+1. Mustache 문법을 이용한 데이터 전개
+2. 디렉티브를 이용한 HTML 요소 확장
 
-데이터를 HTML 텍스트 콘텐츠로 전개하는 것. 자바 스크립트 객체에 든 데이터를 템플릿 안에 적용해 텍스트 콘텐츠를 만들 때 사용.
+첫번째 개념은 데이터를 HTML 텍스트 콘텐츠로 전개하는 것이다. 자바 스크립트 객체에 든 데이터를 템플릿 안에 적용해 텍스트 콘텐츠를 만들 때 사용한다.
 
 data 등의 자바스크립트 객체는 텍스트 콘텐츠 외에도 디렉티브 속성값 등으로도 사용한다.
 
@@ -407,7 +408,96 @@ data 등의 자바스크립트 객체는 텍스트 콘텐츠 외에도 디렉티
 
 여기서 주의할 점은 태그의 속성의 값이 true/false로 전환되는게 아니라, 아예 태그의 속성 자체가 추가/삭제되는 원리이다.
 
-#### 2. Directive(지시문)
+##### 3) 자바스크립트 표현식 전개하기
+
+데이터 바인딩뿐만 아니라 자바스크립트 표현식도 전개가 가능하다. {{}} 안에서뿐만 아니라 속성값도 마찬가지다.
+
+자바스크립트 표현식은 각 ㄱ바인딩의 하나의 단일 표현식만 사용할 수 있으므로, 복잡한 표현식의 경우 filter나 computed, methods를 사용하자.
+
+```html
+<p>{{items[0].price * items[0].quantity}}</p>
+```
+
+
+
+### 필터(filters)
+
+일반적인 텍스트 포매팅 기능을 제공하며(data 객체 각 프로퍼티의 key-value 바인딩), 생성자 옵션 중 한 가지이다. 
+
+Date 객체를 YYYY/mm/dd와 같은 포맷으로 변환하거나 숫자 0.5를 퍼센트 단위("50%")로 변환하는 경우 등에 사용한다.
+
+필터는 생성자에서 옵션 filters에 인자 하나를 받는 함수 형태로 정의한다(Vue 전역변수를 제공하는 API(Vue.filter)에서 정의하면 애플리케이션 전체에서 해당 필터를 사용할 수 있다. 이는 필터 외에 디렉티브 등에서도 똑같다).
+
+`{{ 값 | 필터명 }}`
+
+템플릿에서 {{}} 문법과 |(파이프) 연산자를 조합해 사용한다. 파이프 연산자 왼쪽에 오는 값이 필터의 인자가 된다.
+
+```js
+let vm = new Vue({
+    el: "#app",
+    data: {
+        items: items
+    },
+    filters: {
+        numberWithDelimiter: function(e){
+            if(!e){
+                return "0"
+            }
+            return value.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+        }
+    }
+})
+```
+
+
+
+### 계산 프로퍼티(computed)
+
+어떤 데이터에서 파생된 데이터를 프로퍼티로 공개하는 기능으로, Vue 생성자의 옵션 객체의 한가지이다.
+
+데이터를 모종의 방법으로 처리한 값을 프로퍼티로 삼고 싶을 때(인스턴스에 저장해 다른 곳에서 참조하고 싶을 때) 이 계산 프로퍼티를 사용하는데, 대개 복잡한 식을 템플릿에 나타내는 용도로 사용된다.
+
+```html
+<div id="app">
+    <p>
+        합계: {{ items.reduce(function(sum,item){ return sum + (item.price * item.quantity)}, 0);}}
+    </p>
+</div>
+```
+
+위처럼 Mustache 문법으로 작성해도 동작은 하지만 코드가 너무 길고 여기서 계산하는 값을 한눈에 이해하기가 어렵다. 여기에 계산 프로퍼티를 사용해보자.
+
+```html
+<div id="app">
+    <p>
+        합계: {{ totalPrice }}
+    </p>
+</div>
+<script>
+	new Vue({
+        // ...마운트 및 데이터 정의
+        computed: {
+            totalPrice: function (){
+                return this.items.reduce(function(sum,item){
+                    return sum + (item.price * item.quantity);
+                }, 0)
+            }
+        }
+    })
+</script>
+```
+
+호출을 의미하는 ()를 사용할 필요는 없다.
+
+함수 형태로 정의했지만, 참조할 때는 메서드가 아니라 프로퍼티로 취급된다.
+
+#### this 참조하기
+
+계산 프로퍼티 및 메서드를 이용해 데이터(data 객체)와 계산 프로퍼티를 참조할 때는 `this`를 거쳐서 참조해야 한다. 이 `this`가 가리키는 대상은 Vue 인스턴스 자신이다. data와 computed의 내용은 프로퍼티로 공개되므로 인스턴스에서 직접 참조할 수 있다.
+
+
+
+### Directive(지시문)
 
 Directive란?
 
@@ -415,19 +505,10 @@ Directive란?
 - Vue 의 기능들을 사용하기 위해서 사용하는, HTML 태그 안에 들어가는 하나의 속성
 - v-`something` 의 형식으로 사용한다.
 - 13개의 종류가 있다.
-  1. v-text
-  2. v-html
-  3. v-show
-  4. v-if
-  5. v-else
-  6. v-else-if
-  7. v-pre
-  8. v-cloak
-  9. v-once
 
 
 
-##### 1. v-text
+#### 1. v-text
 
 ```html
 <div id="app">
@@ -465,7 +546,7 @@ v-text의 경우 data에 태그를 넣어줘도 text로 인식을 한다.
 
 
 
-##### 2. v-html
+#### 2. v-html
 
 data 안에 html 태그를 사용하고 싶을 때 v-text대신 사용할 수 있다.
 
@@ -484,7 +565,7 @@ React의 `dangerouslySetInnerHTML` 과 비슷하다.
 
 
 
-##### 3. v-show
+#### 3. v-show
 
 해당 엘리먼트를 display 할지, 말지 true/false로 지정할 수 있다.
 
@@ -511,9 +592,16 @@ var app = new Vue({
 
 이제 app.visibility를 true로 해주면 출력되고 false로 해주면 숨겨진다.
 
+###### v-show와 v-if의 차이점
+
+- v-show는 display 프로퍼티 값을 바꿔주는 개념이기 때문에 트리에서 삭제되지는 않는다.
+- v-if는 조건에 따라 DOM 요소를 생성/삭제되기 된다.
+- 일반적으로 스타일을 수정하는 쪽보다 DOM을 수정하는 쪽이 렌더링 비용이 더 크기 때문에 변화가 잦은 엘레멘트의 경우에는 v-show를 사용하는게 렌더링 비용이 더 적다.
+- 로그인 여부를 확인해 데이터를 받아올 때 처럼 평가 값이 한번밖에 변하지 않는 경우 초기 상태에서 DOM 요소를 생성하지 않고 렌더링 비용을 절약하고 나중에 요소를 생성하는 것이 이상적이다.
 
 
-##### 4. v-if
+
+#### 4. v-if
 
 조건문을 사용하여 엘리멘트가 출력될지 말지 설정할 수 있다. 위의 v-show 디렉티브와 비슷하다.
 
@@ -541,7 +629,7 @@ v-if 디렉티브 안의 조건문이 만족되는 경우에만 출력이 되는
 
 
 
-##### 5. v-else
+#### 5. v-else
 
 v-if 디렉티브와 함께 사용하며 v-if의 조건을 만족하지 않을 경우 다른 내용을 출력하기 위한 디렉티브이다.
 
@@ -557,7 +645,7 @@ v-if 디렉티브와 함께 사용하며 v-if의 조건을 만족하지 않을 �
 
 
 
-##### 6. v-else-if
+#### 6. v-else-if
 
 v-if 디렉터리의 조건을 만족하지 않을 때 체크 할 다른 조건을 설정해줄 수 있다.
 
@@ -576,79 +664,79 @@ v-if와 v-else 사이에 사용되어야 하며 여러번 사용될 수 있다.
 
 
 
-##### 7. v-pre
+#### 7. v-bind
 
-해당 엘리멘트는 디렉티브가 없다고 알리는 특수한 디렉티브이다.
+`v-bind:속성이름="데이터를 전개한 속성값"`
 
-디렉티브가 필요없는 엘리멘트에게 v-pre를 사용하면 vue 시스템이 엘리멘트가 디렉티브가 없다고 인식하기 때문에 그 엘리멘트 내부의 자식 엘리멘트들을 무시하고 건너뜀으로서 컴파일 속도가 빨라진다.
+ex)
 
-```html
-<div id="app">
-    <h1>
-        <!-- 이제 태그가 적용이 된다. -->
-        Hello, I'm <span v-if="value>3" v-html="name"></span>
-        <span v-else-if="value>0">3보단 작지만 0보단 크네요</span>
-        <span v-else>value가 3이하네요</span>
-        <span v-pre>{{ 그대로 컴파일 해주세요 }}</span>
-    </h1>
-</div>
-```
+##### class 바인딩
 
-
-
-##### 8. v-cloak
-
-우리가 웹 페이지를 로드할 때 자바스크립트 코드가 실행되기까지의 시간이 필요하다. 자바스크립트 코드가 실행되기 전까지는 숨기고 싶은 내용들도 모두 출력 될 수 있는데, 이를 막기 위해 v-cloak 디렉티브를 사용한다.
-
-즉, Vue 인스턴스가 제대로 준비될 때 까지 우리의 템플렛을 위한 html 코드를 숨기고 싶을 때 이 디렉티브를 사용한다.
-
-숨기고 싶은 태그에 v-cloak를 넣어주자.
+`v-bind:class="객체 혹은 배열"`
 
 ```html
-<div id="app" v-cloak>
-    <h1>
-        <!-- 이제 태그가 적용이 된다. -->
-        Hello, I'm <span v-if="value>3" v-html="name"></span>
-        <span v-else-if="value>0">3보단 작지만 0보단 크네요</span>
-        <span v-else>value가 3이하네요</span>
-        <span v-pre>{{ 그대로 컴파일 해주세요 }}</span>
-    </h1>
-</div>
+<p v-bind:class="{nav: true, maindscr: false}"></p>
+<p v-bind:class="'nav'"></p>
+<p v-bind:class="{error: !canBuy}"></p>
 ```
 
-그 다음 css 를 지정해주어야 한다.
+객체를 속성값으로 받으면 값이 참인 프로퍼티의 이름을 class 속성의 값으로 반영한다.
 
-```css
-[v-cloak]{
-    display: none;
+```js
+computed: {
+    errorMessageClass: function(){
+        return {
+            error: !this.canBuy
+        }
+    }
 }
 ```
 
+```html
+<p v-bind:class="errorMessageClass">
+	1000원 이상부터 구매 가능
+</p>
+```
 
+##### style 바인딩
 
-##### 9. v-once
-
-해당 엘레멘트를 초기에 **딱 한번만 렌더링**한다. 즉, 자바스크립트 데이터를 사용하는 엘레멘트중 변동이 없거나 초기값만 보여주고 싶은 경우 사용하면 된다.
+`v-bind:style="객체 혹은 배열"`
 
 ```html
-<div id="app" v-cloak>
-    <h1 v-once v-if="value > 5">value 가 5보다 크군요</h1>
-    <h1 v-else-if="value === 5">값이 5네요</h1>
-    <h1 v-else>value 가  5보다 작아요</h1>.
-    <h1 v-pre>{{ 이건 그대로 렌더링해줘요 }}</h1>
-    
-    <h2 v-once>초기 값: {{ value }}</h2>
-	<h2>현재 값: {{ value }}</h2>
-</div>
+<p v-bind:style="{color: 'red', border: '1px solid red'}"></p>
+<p v-bind:style="{color: (canBuy? '':'red'), border: (canBuy? '':'1px solid red')}"></p>
+```
+
+속성값 객체나 배열이 복잡해지면 계산 프로퍼티 형태로 바꾸는 것이 유리하다
+
+```js
+errorMessageStyle: function(){
+    return {
+        border: this.canBuy? '':'1px solid red',
+        color: this.canBuy? '':'red'
+    }
+}
+```
+
+```html
+<p v-bind:style="errorMessageStyle">
+    1000원 이상부터 구매 가능
+</p>
+```
+
+##### 생략 표기법
+
+v-bind는 가장 많이 쓰이는 디렉티브 중 하나다. 이 때문에 간결한 표기를 위한 생략 표기법을 지원한다.
+
+`:속성명`
+
+```html
+<p :class="{error: !canBuy}">
+    1000원 이상부터 구매 가능
+</p>
 ```
 
 
-
-##### 10. v-bind
-
-html 태그 안의 내용을 설정하고 싶은 경우 위의 방법들로 설정해주면 된다.
-
-하지만 img 태그의 src 같이 태그의 속성을 바꾸고 싶을 때는 v-bind 디렉티브를 사용해야 설정이 가능하다.
 
 - javascript
 
@@ -715,7 +803,79 @@ var app = new Vue({
 
 
 
-##### 11. v-for
+#### 8. v-pre
+
+해당 엘리멘트는 디렉티브가 없다고 알리는 특수한 디렉티브이다.
+
+디렉티브가 필요없는 엘리멘트에게 v-pre를 사용하면 vue 시스템이 엘리멘트가 디렉티브가 없다고 인식하기 때문에 그 엘리멘트 내부의 자식 엘리멘트들을 무시하고 건너뜀으로서 컴파일 속도가 빨라진다.
+
+```html
+<div id="app">
+    <h1>
+        <!-- 이제 태그가 적용이 된다. -->
+        Hello, I'm <span v-if="value>3" v-html="name"></span>
+        <span v-else-if="value>0">3보단 작지만 0보단 크네요</span>
+        <span v-else>value가 3이하네요</span>
+        <span v-pre>{{ 그대로 컴파일 해주세요 }}</span>
+    </h1>
+</div>
+```
+
+
+
+#### 9. v-cloak
+
+우리가 웹 페이지를 로드할 때 자바스크립트 코드가 실행되기까지의 시간이 필요하다. 자바스크립트 코드가 실행되기 전까지는 숨기고 싶은 내용들도 모두 출력 될 수 있는데, 이를 막기 위해 v-cloak 디렉티브를 사용한다.
+
+즉, Vue 인스턴스가 제대로 준비될 때 까지 우리의 템플렛을 위한 html 코드를 숨기고 싶을 때 이 디렉티브를 사용한다.
+
+숨기고 싶은 태그에 v-cloak를 넣어주자.
+
+```html
+<div id="app" v-cloak>
+    <h1>
+        <!-- 이제 태그가 적용이 된다. -->
+        Hello, I'm <span v-if="value>3" v-html="name"></span>
+        <span v-else-if="value>0">3보단 작지만 0보단 크네요</span>
+        <span v-else>value가 3이하네요</span>
+        <span v-pre>{{ 그대로 컴파일 해주세요 }}</span>
+    </h1>
+</div>
+```
+
+그 다음 css 를 지정해주어야 한다.
+
+```css
+[v-cloak]{
+    display: none;
+}
+```
+
+
+
+#### 10. v-once
+
+해당 엘레멘트를 초기에 **딱 한번만 렌더링**한다. 즉, 자바스크립트 데이터를 사용하는 엘레멘트중 변동이 없거나 초기값만 보여주고 싶은 경우 사용하면 된다.
+
+```html
+<div id="app" v-cloak>
+    <h1 v-once v-if="value > 5">value 가 5보다 크군요</h1>
+    <h1 v-else-if="value === 5">값이 5네요</h1>
+    <h1 v-else>value 가  5보다 작아요</h1>.
+    <h1 v-pre>{{ 이건 그대로 렌더링해줘요 }}</h1>
+    
+    <h2 v-once>초기 값: {{ value }}</h2>
+	<h2>현재 값: {{ value }}</h2>
+</div>
+```
+
+
+
+#### 11. v-bind
+
+
+
+#### 12. v-for
 
 html에서 for-loop를 구현하기 위해서 사용한다. ex) 게시판의 게시물 목록 렌더링
 
@@ -767,7 +927,7 @@ forEach를 사용한다고 생각하면 된다.
 
 
 
-##### 12. v-model
+#### 13. v-model
 
 이전에 머스태쉬 {{ }} 를 사용한 데이터 출력은, 단방향 데이터 바인딩 이었다.
 
@@ -833,11 +993,15 @@ var app = new Vue({
 
 
 
-##### 13. v-on
+#### 14. v-on
 
 드디어 methods를 사용할 때가 되었다. v-on을 사용해서 이벤트를 발생시 처리를 할 수 있는데, 그 동작을 정의하기 위해 methods를 정의해서 사용하자.
 
 v-on을 사용할 때는 `v-on:이벤트이름="메소드이름"` 형식으로 사용해보자.
+
+생략 표기법
+
+`@이벤트이름` ex) `@click`
 
 카운터를 만들면서 사용법을 익혀보자.
 
@@ -877,4 +1041,590 @@ let app = new Vue({
     </button>
 </div>
 ```
+
+### 생애주기 훅(lifecycle hook)
+
+Vue 인스턴스는 생성부터 소멸까지 생애주기를 갖는다.
+
+예를 들어 컴포넌트 표시 여부를 v-if 디렉티브로 제어하고 있다면 조건이 참이 됐을 때 Vue 인스턴스가 생성되고, 그 후 사용자 조작으로 업데이트가 반복되다가 v-if 조건이 거짓이 되면 Vue 인스턴스가 폐기된다.
+
+Vue 인스턴스의 중요도 순서대로 수행할 처리를 미리 등록해두고 해당 시점에 자동으로 그 처리 내용을 호출하게끔 할 수 있다.
+
+#### 1. 생애주기 훅의 종류와 호출 시점
+
+등록 시점의 종류는 create, mounted, destroyed 등이 있다. Vue 인스턴스 생성자(컴포넌트)의 옵션의 시점 프로퍼티 안에 해당 시점에 실행 할 함수를 값으로 지정한다.
+
+| 훅 이름       | 훅이 호출되는 시점                               |
+| ------------- | ------------------------------------------------ |
+| beforeCreate  | 인스턴스가 생성된 다음 데이터가 초기화되는 시점  |
+| created       | 인스턴스가 생성된 다음 데이터 초기화가 끝난 시점 |
+| beforeMount   | 인스턴스가 DOM 요소에 마운트되는 시점            |
+| mounted       | 인스턴스가 DOM 요소에 마운트가 끝난 시점         |
+| beforeUpdate  | 데이터가 수정돼 DOM에 반영되는 시점              |
+| updated       | 데이터가 수정돼 DOM에 반영이 끝난 시점           |
+| beforeDestroy | Vue 인스턴스가 폐기되기 전                       |
+| destroyed     | Vue 인스턴스가 폐기된 다음                       |
+
+그림으로는 다음과 같다.
+
+![](./image/7.jpg)
+
+이제 자주 사용하는 훅을 살펴보자.
+
+#### 2. created 훅
+
+인스턴스가 생성되고 데이터가 초기화된 시점에 실행된다. 이 단계는 아직 DOM 요소가 인스턴스와 연결된 상태가 아니다.
+
+그러므로 아직 인스턴스의 $el 프로퍼티와 DOM API의 getElementById, querySelectorAll 을 사용해서 DOM 요소를 반환받을 수 없는 상태이다.
+
+이 훅은 Vuex를 적용하지 않은 소규모 애플리케이션에서 웹 API를 통해 데이터 관련 처리를 시작하거나 setInterval, setTimeout을 반복 실행해야 하는 타이머 처리를 시작하는 시작점으로 사용한다.
+
+#### 3. mounted 훅
+
+인스턴스와 DOM 요소가 연결된 시점에 실행된다. 인트선트의 $el 프로퍼티나 querySelectorAll 같은 DOM API를 사용할 수 있는 시점이므로 DOM 조작 및 이벤트 리스너 등록은 이 훅을 사용하면 된다.
+
+#### 4. beforeDestroy 훅
+
+인스턴스가 폐기되기 직전에 실행된다. mounted 훅에서 DOM 요소에 등록한 이벤트 리스너나 타이머 등을 '뒷정리'해서 메모리 누수를 막는다.
+
+
+
+위의 훅들이 실행되는 시점을 타이머 처리 예제로 확인해보자.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{count}}</p>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: function() {
+                return {
+                    count: 0,
+                    timerId: null
+                }
+            },
+            beforeCreate: function(){
+                console.log("beforeCreate");
+                // 데이터 초기화가 아직 안됐으므로 undefined임
+                console.log(this.count);
+            },
+            created: function(){
+                console.log("created");
+                let that = this
+                // 데이터에서 참조 가능
+                console.log(this.count);
+                // DOM 요소가 연결되지 않았으므로 undefined임
+                console.log(this.$el);
+                // 타이머 시작
+                this.timerId = setInterval(function(){
+                    that.count += 1
+                }, 1000)
+            },
+            mounted: function(){
+                console.log("mounted");
+                // DOM 요소가 연결됨
+                console.log(this.$el);
+            },
+            beforeDestroy: function(){
+                console.log("beforeDestory");
+                // 타이머 정리
+                clearInterval(this.timerId);
+            }
+        })
+        window.vm = vm
+    </script>
+</body>
+</html>
+```
+
+$destroy 메서드를 호출하는 방법으로 수동으로 인스턴스를 폐기할 수 있다.
+
+`vm.$destroy()`
+
+
+
+### 메서드(methods)
+
+데이터 수정 및 서버에 HTTP 요청을 보낼 때 사용한다.
+
+```js
+methods: {
+    메서드명: function(){
+        // 원하는 처리
+    }
+}
+```
+
+v-on 디렉티브의 속성값에 바인딩하고 뷰에서 이벤트가 발생했을 때 호출되는 형태로 사용하는 것이 가장 흔하다. 템플릿에서도 {{메서드명}}과 같은 형태로 텍스트 전개에 사용할 수 있다.
+
+```html
+<button :disabled="!canBuy" @click="doBuy">구매</button>
+```
+
+메소드명을 속성값으로 사용했다면 이벤트 객체가 기본 인자로 메서드에 전달된다. 이 이벤트 객체는 표현식에서 $event 라는 특별한 이름으로 참조할 수 있는데, 앞서 본 템플릿과 같은 동작을 표현식으로 구현하려면 다음과 같이 하면 된다.
+
+```html
+<button :disabled="!canBuy" @click="doBuy($event)">구매</button>
+```
+
+#### 1. 이벤트 객체
+
+이벤트 객체는 이벤트가 발생한 요소와 좌표 등의 정보를 담고 있으며, 표준 DOM API의 addEventListener에서 첫 번째 인자로 받는 이벤트 객체와 동일한 것이다.
+
+```js
+methods: {
+    메서드 이름: function(event){
+        // 인자 event는 이벤트 객체
+    }
+}
+```
+
+---
+
+##### 계산 프로퍼티의 캐싱 메커니즘
+
+계산 프로퍼티는 해당 프로퍼티가 의존하는 데이터가 수정되지 않는 한 앞서 계산한 결과를 캐시해두는 특징이 있다. 같은 기능을 메서드로 구현할 수는 있으나 메서드는 계산 결과가 캐시되지 않으므로 호출될 때마다 값을 다시 계산한다. 이런 특징 때문에 계산한 결과를 재사용할 수 있는 계산 프로퍼티를 사용하는 것이 좋다.
+
+단, 계산 프로퍼티의 계산 값의 캐싱은 **의존 데이터의 변화를 기준으로 한다**. 그러므로 Vue 인스턴스의 데이터가 아닌 현재 시각이나 DOM의 상태 등 외부에서 받은 정보, 사이드 이펙트가 따르는 값을 사용한 경우에는 이들 값이 변화한 것을 탐지할 수 없기 때문에 재계산이 일어나지 않는다.
+
+```js
+var vm = new Vue({
+    el: "#app",
+    data: {
+        messagePrefix: "Hello"
+    },
+    computed: {
+        message: function() {
+            let timestamp = Date.now();
+            return this.messagePrefix + ", " + timestamp;
+        }
+    }
+})
+```
+
+위의 계산 프로퍼티 message는 인사 메시지와 타임 스탬프 값을 출력한다. 이 값은 messagePrefix 값이 변경되기 전까지는 캐시된 값을 그대로 반환할 것이다.
+
+---
+
+이벤트 객체를 이용해 preventDefault나 stopPropagation 같은 이벤트의 동작을 제어하는 메서드를 호출할 수도 있다. 예를 들어 링크를 클릭했을 때 URL로의 페이지 이동을 preventDefault를 호출해서 방지할 수 있다. stopPropagation은 이벤트가 조상 요소에 전파되는 것을 막는 메서드다.
+
+```html
+<button :disabled="!canBuy" @click.prevent="doBuy">구매</button>
+```
+
+
+
+## 컴포넌트의 기초
+
+### 컴포넌트란?
+
+웹 애플리케이션 UI는 이를 구성하는 여러 부품의 조합으로 볼 수 있다.
+
+예를 들어 구글의 최상위 페이지는 Gmail이나 로그인 링크 등을 모아놓은 헤더, 검색창, 면책 조항 링크 등을 모아놓은 푸터, 이렇게 3개 요소로 구성된다. 헤더를 더 세세하게 나누면 Gmail 링크와 로그인 버튼으로 나뉜다. 이러한 부품들을 UI 컴포넌트라고 한다.
+
+![](./image/8.jpg)
+
+
+
+- 웹사이트의 규모와 상관없이 이러한 컴포넌트가 트리 구조를 이룬 컴포넌트 트리 형태로 구성된다
+- 한 페이지 안에서 기능이나 외관이 비슷한 부분, 서로 다른 페이지끼리도 재사용할 수 있는 부분 등 같은 UI 컴포넌트가 반복적으로 사용된다.
+
+#### 장점
+
+- 재사용성 향상 → 개발 효율성이 좋아짐
+- 이미 사용하는 컴포넌트를 재사용 → 품질 보장
+- 적절히 분할한 컴포넌트가 느슨하게 결합하므로 유지 보수성 향상
+- 캡슐화를 통해 개발 작업에서 신경 써야 할 부분을 최소화
+
+
+
+#### Vue.js의 컴포넌트 시스템
+
+Vue.js는 컴포넌트 지향에 방점을 찍은 UI 라이브러리다.
+
+Vue.js의 컴포넌트란 재사용 가능한 Vue 인스턴스를 의미한다.
+
+```js
+Vue.component("list-item",{
+    template: "<li>foo</li>"
+})
+```
+
+위의 코드는 Vue.js의 컴포넌트이다. `Vue.component()`의 첫 번째 인자가 컴포넌트명이고, 두 번째 인자는 컴포넌트의 내용 등을 담은 옵션이다. 단순하지만 완전한 Vue.js 컴포넌트다.
+
+##### Vue 컴포넌트는 재사용할 수 있는 Vue 인스턴스이다.
+
+따라서 Vue 컴포넌트 안에서 템플릿 문법을 사용할 수 있다.
+
+```html
+<ul id="example">
+    <list-item></list-item>
+</ul>
+
+<script>
+	// 컴포넌트
+    Vue.component("list-item",{
+    	template: "<li>{{message}}</li>",
+        data: function(){
+            return {message: "안녕하세요"}
+        }
+	})
+    
+    // 최상위 Vue 인스턴스 생성
+    new Vue({ el: '#example' })
+</script>
+```
+
+
+
+### Vue 컴포넌트 정의하기
+
+Vue 컴포넌트는 용도에 따라 전역 컴포넌트와 지역 컴포넌트로 정의한다. 정의하는 방법 역시 Vue.component()를 사용하는 커스텀 태그 방식과 Vue.extend()를 사용하는 하위 생성자 방식으로 나뉜다.
+
+#### 1. 전역 컴포넌트 정의하기
+
+가장 일반적인 방법인 커스텀 태그 방식으로 정의해보자.
+
+Vue.component() API를 사용한다.
+
+```js
+Vue.component(tagName, options)
+```
+
+첫번째 인자 tagName은 여기서 만들 컴포넌트의 이름을 값(문자열)으로 받는다. 이 문자열이 커스텀 태그의 태그명이 된다. 두번째 인자 options는 컴포넌트 자체에 대한 여러 가지 설정 정보를 담은 객체를 값으로 받는다. 이 객체의 내용은 기본적으로 Vue 인스턴스의 설정 옵션, template, props, 생애주기 훅 등도 사용할 수 있다.
+
+> el은 최상위 Vue 인스턴스만이 추가할 수 있다. 컴포넌트가 여러 곳에서 재사용하기 위해 만든 것임을 생각하면 el을 지정할 수 없는 이유는 자연스러운 것이다.
+
+| 옵션 이름  | 용도                            |
+| ---------- | ------------------------------- |
+| data       | UI 상태 및 데이터               |
+| filters    | 데이터를 문자열로 포매팅        |
+| methods    | 이벤트가 발생했을 때의 동작     |
+| computed   | 데이터에서 파생된 값            |
+| template   | 컴포넌트 템플릿                 |
+| props      | 부모 컴포넌트로부터 받은 데이터 |
+| created 외 | 생애주기 훅(생성 시점)          |
+
+이 중 컴포넌트를 정의할 때 사용하는 것이 template과 props다. template은 컴포넌트에서 사용할 템플릿을 정의하는 옵션이다. props는 상위 컴포넌트에서 커스텀 태그를 사용할 때 하위 컴포넌트가 전달받는 값을 저장할 변수를 정의하는 옵션이다.
+
+##### 컴포넌트 구현의 간단한 예제
+
+```html
+<div id="example" :style="style">
+        <fruit-title></fruit-title>
+        <fruit-dscr></fruit-dscr>
+        <fruit-table></fruit-table>
+    </div>
+    <script>
+        // 컴포넌트
+        Vue.component("fruit-title", {
+            template: "<h1>{{message}}</h1>",
+            data: function () {
+                return { message: "과일 목록" }
+            }
+        });
+        Vue.component("fruit-dscr", {
+            template: "<p>{{message}}</p>",
+            data: function(){
+                return { message: "각 계절 대표적 과일의 목록"}
+            }
+        });
+        Vue.component("fruit-table", {
+            template: `
+                <table :style="tableStyle">
+                    <tr>
+                        <th :style="thStyle">
+                            계절
+                        </th>
+                        <th :style="thStyle">
+                            과일
+                        </th>
+                    </tr>
+                </table>
+            `,
+            data: function(){
+                return {
+                    tableStyle: {
+                        width: "100%",
+                    },
+                    thStyle: {
+                        border: "1px solid grey"
+                    }
+                }
+            }
+        })
+
+        // 최상위 Vue 인스턴스 생성
+        new Vue({
+            el: '#example',
+            data: {
+                style: {
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    textAlign: "center"
+                }
+            }
+        })
+    </script>
+```
+
+##### 컴포넌트 재사용하기
+
+일반적인 Vue 인스턴스는 한 번 밖에 사용할 수 없지만, 컴포넌트는 여러 번 사용할 수 있다.
+
+##### 자식 컴포넌트와 부모 컴포넌트
+
+컴포넌트 간에 부모자식 관계를 가질 수 있다(최종 결과로 렌더링될 DOM 요소 간의 부모자식 관계와 같다).
+
+
+
+#### 2. 생성자를 사용해서 컴포넌트 정의하기
+
+전역 API Vue.extend()를 사용해서 Vue 생성자를 상속받는 하위 생성자를 만들 수 있다. 이 하위 생성자를 사용하는 방법으로도 컴포넌트를 만들 수 있다.
+
+정의한 컴포넌트를 특정 요소에 바로 마운트하기 위해 `$mount` 함수를 사용한다.
+
+```js
+let FruitsListTitle = Vue.extend({
+    template: "<h1>과일 목록</h1>",
+})
+
+new FruitsListTitle().$mount("#exam")
+```
+
+
+
+Vue.js 는 **요소를 정의해 그것을 다른 요소에 삽입하는 템플릿 기반 방법(1)**과 **인스턴스를 만들어 원하는 위치에 마운트하는 생성자 기반 방법(2)**의 두 가지 방법을 제공한다. (1)의 두번째 인자인 옵션 객체를 전달하는 방법도 묵시적으로 Vue.extend()를 호출한다.
+
+
+
+#### 3. 지역 컴포넌트 정의하기
+
+전역적으로 사용 가능한 대상을 등록하는 일은 간혹 오류를 일으키거나 코드가 복잡해지는 원인이 된다. 빌드 단계에서 최적화할 때도 전역 컴포넌트는 삭제할 수 없기 때문에 문제가 된다.
+
+컴포넌트를 어떤 특정한 Vue 인스턴스(=Vue 컴포넌트) 안에서만 사용할 수 있도록 지역 컴포넌트로 등록할 수 있다.  부모 Vue 인스턴스 혹은 컴포넌트 옵션에 components 객체를 정의하고 여기에 컴포넌트를 등록하면 된다. 그러면 해당 컴포넌트 안에서만 사용할 수 있는 지역 컴포넌트가 된다.
+
+```html
+<div id="fruits-list">
+        <fruits-list-title></fruits-list-title>
+        <fruit-dscr></fruit-dscr>
+        <fruit-table></fruit-table>
+    </div>
+    <script>
+        new Vue({
+            el: "#fruits-list",
+            components: {
+                "fruits-list-title": {
+                    template: "<h1>과일 목록</h1>"
+                },
+                "fruit-dscr": {
+                    template: "<p>{{message}}</p>",
+                    data: function(){
+                        return {message: "각 계절 대표적 과일의 목록"}
+                    }
+                },
+                "fruit-table": {
+                    template: `
+                        <table :style="tableStyle">
+                            <table-head></table-head>
+                            <table-body></table-body>
+                        </table>
+                    `,
+                    data: function () {
+                        return {
+                            tableStyle: {
+                                width: "300px",
+                                borderCollapse: "collapse"
+                            }
+                        }
+                    },
+                    components: {
+                        "table-head": {
+                            template: `
+                                <tr>
+                                    <th :style="thStyle">
+                                        계절
+                                    </th>
+                                    <th :style="thStyle">
+                                        과일
+                                    </th>
+                                </tr>
+                            `,
+                            data: function () {
+                                return {
+                                    thStyle: {
+                                        border: "1px solid grey",
+                                        color: "red",
+                                        background: "pink"
+                                    }
+                                }
+                            }
+                        },
+                        "table-body": {
+                            template: `
+                                <tbody>
+                                    <tr>
+                                        <td :style="tdStyle">
+                                            봄
+                                        </td>
+                                        <td :style="tdStyle">
+                                            딸기
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td :style="tdStyle">
+                                            여름
+                                        </td>
+                                        <td :style="tdStyle">
+                                            수박
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td :style="tdStyle">
+                                            가을
+                                        </td>
+                                        <td :style="tdStyle">
+                                            포도
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td :style="tdStyle">
+                                            겨울
+                                        </td>
+                                        <td :style="tdStyle">
+                                            귤
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            `,
+                            data: function () {
+                                return {
+                                    tdStyle: {
+                                        border: "1px solid grey",
+                                        color: "black",
+                                        textAlign: "center"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+```
+
+사용 범위가 제한되기 때문에 다른 곳에서는 커스텀 태그(fruits-list-title, fruit-dscr, fruit-table, table-head, table-body)를 사용할 수 없다.
+
+
+
+#### 4. 템플릿을 만드는 그 외의 방법
+
+##### 1. text/x-template
+
+HTML 파일에 type이 text/x-template인 script 요소를 작성한 다음, 이 요소 안에 템플릿을 구성하는 HTML 요소를 작성하는 방법이다. 이 script 요소에는 id 값을 부여한다. HTML 쪽으로 템플릿을 따로 구분하기 쉽게 작성할 수 있기 때문에 복잡한 템플릿을 작성할 때 이해하기 쉽다
+
+```html
+<div id="fruits-list">
+    <fruits-list-title></fruits-list-title>
+</div>
+<!-- 위에서 정의한 id를 문자열로 template 속성에 지정한다. -->
+<script type="text/x-template" id="fruits-list-title">
+    <h1>과일 목록</h1>
+</script>
+<script>
+    Vue.component("fruits-list-title",{
+        template: "#fruits-list-title"
+    })
+    new Vue({el: "#fruits-list"})
+</script>
+```
+
+text/x-template은 브라우저에서 인식하지 못하는 MIME 타입이기 때문에 브라우저에서 무시된다. Vue.js만 이 스크립트를 처리할 수 있다.
+
+
+
+##### 2. render 함수
+
+템플릿을 프로그램적으로 작성하기 어렵기 때문에 사용하는 방법이다. v-if나 v-for를 사용해 분기와 반복을 사용할 수는 있지만, 코드가 복잡해지기 쉽다.
+
+Vue.js는 컴포넌트에서 코드를 사용할 수 있도록 render 옵션을 제공한다. template과는 별개의 옵션이지만 템플릿을 만들 때 유용하다.
+
+```html
+<div id="fruits-list">
+    <fruits-list-title></fruits-list-title>
+    <input-date-with-today></input-date-with-today>
+</div>
+
+<script>
+    Vue.component("fruits-list-title", {
+        template: "<h1>과일 목록</h1>"
+    })
+    Vue.component("input-date-with-today", {
+        render: function (createElement) {
+            return createElement(
+                "input",
+                {
+                    attrs: {
+                        type: 'date',
+                        value: new Date().toISOString().substring(0, 10)
+                    }
+                }
+            )
+        }
+    })
+    new Vue({ el: "#fruits-list" })
+</script>
+```
+
+
+
+##### 3. 단일 파일 컴포넌트
+
+##### 4. 인라인 템플릿
+
+##### 5. JSX
+
+
+
+#### 5. 컴포넌트 생애주기
+
+각 컴포넌트는 저마다 생애주기를 갖는다. Vue 인스턴스와 마찬가지로 생애주기 훅이 각 생애주기 시점마다 이에 해당하는 이벤트를 발생시킨다. 그러므로 Vue 인스턴스처러 이 이벤트에 맞춰 실행되는 훅 함수를 정의할 수 있다.
+
+
+
+#### 6. 컴포넌트 데이터
+
+Vue 인스턴스처럼 컴포넌트가 갖는 데이터를 옵션 객체의 data 속성에 정의할 수 있다. **Vue 컴포넌트의 data 속성은 함수 형태로 정의한다.**
+
+Vue 인스턴스의 data 속성은 객체 형태로 정의됐으나, 컴포넌트의 data 속성을 객체 형태로 정의하면 모든 인스턴스가 이 data 객체를 공유하기 때문에 인스턴스끼리 다른 값을 데이터로 가질 수가 없다. 인스턴스 간에 서로 다른 데이터를 가지려면 객체를 반환하는 함수를 정의하고 이 함수를 data 속성의 값으로 지정해야 한다. 그리고 data 속성 외에 el 속성도 모든 컴포넌트가 같은 대상을 참조하므로 함수 형태로 선언해야 한다.
+
+```js
+// data를 return문으로 반환
+Vue.component("simple-counter", {
+    template: "<h1>과일 목록</h1>",
+    data: function () {
+        return {
+            fruits: ["사과", "귤"]
+        }
+    }
+})
+```
+
+
+
+### 컴포넌트 간 통신
 

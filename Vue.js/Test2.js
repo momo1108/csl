@@ -22,17 +22,17 @@ let app = new Vue({
         showtotal: true
     },
     methods: {
-        quantitycontroller: function(which, index){
-            which==0? this.items[index].quantity++ : this.items[index].quantity--
-            if(this.items[index].quantity<0) {
+        quantitycontroller: function (which, index) {
+            which == 0 ? this.items[index].quantity++ : this.items[index].quantity--
+            if (this.items[index].quantity < 0) {
                 alert("수량은 0개 미만이 될 수 없습니다!");
                 this.items[index].quantity++;
             }
         },
-        order: function(){
-            if(this.totalprice>10000) {
+        order: function () {
+            if (this.totalprice > 10000) {
                 alert("주문완료!");
-                this.items.forEach(e=>{
+                this.items.forEach(e => {
                     e.quantity = 0;
                 })
             }
@@ -40,26 +40,37 @@ let app = new Vue({
         }
     },
     filters: {
-        addwon: function(e){
+        addwon: function (e) {
             return `${e} 원`;
         }
     },
     computed: {
-        totalprice: function() {
-            let total=0;
-            this.items.forEach(e=>{
+        totalprice: function () {
+            let total = 0;
+            this.items.forEach(e => {
                 total += e.price * e.quantity;
-                console.log(typeof(total));
+                console.log(typeof (total));
                 console.log(total);
             })
             console.log(total);
             return total;
+        },
+        canBuy: function () {
+            if (this.totalprice >= 10000) return true;
+            else return false;
+        },
+        errorStyle: function () {
+            return {
+                color: !this.canBuy ? "red" : "",
+                fontSize: !this.canBuy ? "20px" : "",
+                textAlign: !this.canBuy ? "center" : "",
+            };
         }
     }
 
 })
-app.$watch(function (){
+app.$watch(function () {
     return this.items[0].quantity;
-}, (quantity)=>{
+}, (quantity) => {
     console.log(quantity)
 })
