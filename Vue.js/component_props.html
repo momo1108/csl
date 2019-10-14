@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="fruits-component">
+        <ol>
+            <!-- v-for를 사용해 각 fruit를 props(fruits-item)에 전달 -->
+            <fruits-item-name v-for="fruit in fruitsItems" :key="fruit.name" :fruitsItem="fruit"></fruits-item-name>
+        </ol>
+    </div>
+    <script>
+        Vue.component("fruits-item-name", {
+            props: {
+                fruitsItem: {
+                    type: Object,   // props의 data type
+                    required: true  // props의 필수 유무
+                }
+            },
+            template: `<li>{{fruitsItem.name}}</li>`
+        })
+        new Vue({
+            el: "#fruits-component",
+            data: {
+                fruitsItems: [
+                    {name: "배"},
+                    {name: "딸기"}
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
