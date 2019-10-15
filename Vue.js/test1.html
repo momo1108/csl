@@ -10,20 +10,31 @@
 </head>
 
 <body>
-    <div id="app"></div>
-    <button id="btn" v-on:click="click">클릭해봐</button>
+    <div class="app"></div>
+    <div class="app"></div>
+    <div class="app"></div>
+    <div class="app"></div>
+    <button id="btn" v-on:click="click('Hi',$event)">클릭해봐</button>
     <del>It's me</del>
     <script>
         let app = new Vue({
-            el: "#app",
-            template: "<p>{{msg}}</p>",
+            el: ".app",
+            template: "<p>{{plused}}</p>",
             data: {
-                msg: "hello world!"
+                msg: "hello world!",
+                num: 0
             },
             methods: {
                 click: () => {
                     alert("클릭했네?");
+                },
+                plus: function(e){
+                    e+=1;
+                    return e;
                 }
+            },
+            computed: {
+                plused: this.plus(this.num)
             }
         });
         let app1 = new Vue({
@@ -32,7 +43,9 @@
                 msg: "hello world!"
             },
             methods: {
-                click: () => {
+                click: (msg,e) => {
+                    console.log(msg);
+                    console.log(e);
                     alert("클릭했네?");
                 }
             }

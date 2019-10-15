@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        #first {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='first'>
+        <h3 v-html="num"></h3>
+        <button @click="plus">+</button>
+    </div>
+    <script type="text/javascript">
+        var model = { 
+            title: 'SSAFY',
+            num: 0
+        };
+        var first = new Vue({
+            el: '#first',
+            data: model,
+            methods: {
+                plus: function(){
+                    this.num++;
+                }
+            },
+            beforeCreate: function () {
+                console.log('beforeCreate title: ' + this.title);
+            },
+            created: function () {
+                console.log('created title: ' + this.title);
+                console.log('created 연결된 DOM 엘리먼트: ' + this.$el);
+            },
+            beforeMount: function () {
+                console.dir('beforeMount title: ' + this.title);
+            },
+            mounted: function () {
+                console.log('mounted 연결된 DOM 엘리먼트: ' + this.$el);
+            },
+            beforeUpdate: function () {
+                console.log("beforeUpdate 호출됨");
+            },
+            updated: function () {
+                console.log("updated 호출됨");
+            }
+        });
+    </script>
+</body>
+
+</html>
