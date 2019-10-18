@@ -27,9 +27,11 @@
 
     <script type="text/javascript">
         new Vue({
-            el: "#app",
             data: {
                 count: 1
+            },
+            created() {
+                console.log("생성됨");
             }
         })
         Vue.config.devtools = true;
