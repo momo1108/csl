@@ -32,7 +32,6 @@ public class Greedy1 {
 			max -= gap[i];
 			M--;
 		}
-		System.out.println(max);
 	}
 
 }

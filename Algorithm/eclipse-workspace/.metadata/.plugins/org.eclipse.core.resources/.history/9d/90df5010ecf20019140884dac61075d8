@@ -1,8 +1,6 @@
 package kr.bang.algorithm;
 
 import java.io.FileInputStream;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class Greedy1 {
@@ -17,22 +15,15 @@ public class Greedy1 {
 		int M = s.nextInt(); // 판자의 개수
 		int S = s.nextInt();
 		int C = s.nextInt();
-		int[] cow = new int[C];
-		int[] gap = new int[C-1];
-		for(int i=0; i<C; i++) {
-			cow[i] = s.nextInt();
-			if(i>0) {
-				gap[i-1] = cow[i] - cow[i-1] - 1;
-			}
+		int[] home = new int[C];
+		int min = 0;
+		int max = 0;
+		for(int i=1; i<=C; i++) {
+			if(i==1) min = s.nextInt();
+			else if(i==C) max = s.nextInt();
+			else s.nextInt();
 		}
-		int max = cow[C-1] - cow[0] + 1;
-		Arrays.sort(gap);
-		for(int i=C-2; i>0; i--) {
-			if(gap[i]==0 || M<=1)break;
-			max -= gap[i];
-			M--;
-		}
-		System.out.println(max);
+		System.out.printf("%d, %d",min,max);
 	}
 
 }

@@ -25,14 +25,11 @@ public class Greedy1 {
 				gap[i-1] = cow[i] - cow[i-1] - 1;
 			}
 		}
-		int max = cow[C-1] - cow[0] + 1;
+		int max = cow[C] - cow[0] + 1;
 		Arrays.sort(gap);
 		for(int i=C-2; i>0; i--) {
-			if(gap[i]==0 || M<=1)break;
-			max -= gap[i];
-			M--;
+			gap[i]
 		}
-		System.out.println(max);
 	}
 
 }
