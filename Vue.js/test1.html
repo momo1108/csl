@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2.5.17"></script>
+</head>
+
+<body>
+    <div class="app"></div>
+    <div class="app"></div>
+    <div class="app"></div>
+    <div class="app"></div>
+    <button id="btn" v-on:click="click('Hi',$event)">클릭해봐</button>
+    <del>It's me</del>
+    <script>
+        let app = new Vue({
+            el: ".app",
+            template: "<p>{{plused}}</p>",
+            data: {
+                msg: "hello world!",
+                num: 0
+            },
+            methods: {
+                click: () => {
+                    alert("클릭했네?");
+                },
+                plus: function(e){
+                    e+=1;
+                    return e;
+                }
+            },
+            computed: {
+                plused: this.plus(this.num)
+            }
+        });
+        let app1 = new Vue({
+            el: "#btn",
+            data: {
+                msg: "hello world!"
+            },
+            methods: {
+                click: (msg,e) => {
+                    console.log(msg);
+                    console.log(e);
+                    alert("클릭했네?");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1251,7 +1251,11 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+<<<<<<< HEAD
 !SESSION 2019-10-09 15:00:03.534 -----------------------------------------------
+=======
+!SESSION 2019-10-13 19:52:07.369 -----------------------------------------------
+>>>>>>> 9273cfc7789f3ac6c8915bcff0a9dcf5d65b6c5d
 eclipse.buildId=4.13.0.I20190916-1045
 java.version=1.8.0_221
 java.vendor=Oracle Corporation
@@ -1259,10 +1263,17 @@ BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2019-10-09 15:00:06.852
 !MESSAGE Unable to load resource file:/C:/Users/방씨/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 !STACK 0
 org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/방씨/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/방씨/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; 문서에서 루트 요소 앞에 오는 마크업은 올바른 형식이어야 합니다.
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2019-10-13 19:52:09.710
+!MESSAGE Unable to load resource file:/C:/Users/bang/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+!STACK 0
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/bang/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/bang/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; 문서에서 루트 요소 앞에 오는 마크업은 올바른 형식이어야 합니다.
+>>>>>>> 9273cfc7789f3ac6c8915bcff0a9dcf5d65b6c5d
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
@@ -1288,7 +1299,11 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:660)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:597)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1468)
+<<<<<<< HEAD
 Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/방씨/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/방씨/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; 문서에서 루트 요소 앞에 오는 마크업은 올바른 형식이어야 합니다.
+=======
+Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/bang/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/bang/Documents/GitHub/csl/Algorithm/eclipse-workspace/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; 문서에서 루트 요소 앞에 오는 마크업은 올바른 형식이어야 합니다.
+>>>>>>> 9273cfc7789f3ac6c8915bcff0a9dcf5d65b6c5d
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
 	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(Unknown Source)
@@ -1312,7 +1327,11 @@ Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/방씨/Document
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	... 23 more
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2019-10-09 15:00:06.857
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2019-10-13 19:52:09.714
+>>>>>>> 9273cfc7789f3ac6c8915bcff0a9dcf5d65b6c5d
 !MESSAGE The persisted application model has no top-level window. Reinitializing with the default application model.
 !STACK 0
 java.lang.Exception
@@ -1337,6 +1356,7 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:597)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1468)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.egit.ui 2 0 2019-10-09 15:00:17.929
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\방씨'. If this is
@@ -1441,6 +1461,11 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.e
 !ENTRY org.eclipse.egit.ui 2 0 2019-10-20 16:17:59.507
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\방씨'. If this is
+=======
+!ENTRY org.eclipse.egit.ui 2 0 2019-10-13 19:52:16.139
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\bang'. If this is
+>>>>>>> 9273cfc7789f3ac6c8915bcff0a9dcf5d65b6c5d
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.

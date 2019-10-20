@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="fruits-list">
+        <fruits-list-title></fruits-list-title>
+        <input-date-with-today></input-date-with-today>
+    </div>
+
+    <script>
+        Vue.component("fruits-list-title", {
+            template: "<h1>과일 목록</h1>"
+        })
+        Vue.component("input-date-with-today", {
+            render: function (createElement) {
+                return createElement(
+                    "input",
+                    {
+                        attrs: {
+                            type: 'date',
+                            value: new Date().toISOString().substring(0, 10)
+                        }
+                    }
+                )
+            }
+        })
+        new Vue({ el: "#fruits-list" })
+    </script>
+</body>
+
+</html>

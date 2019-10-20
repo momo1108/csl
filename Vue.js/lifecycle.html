@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{count}}</p>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: function() {
+                return {
+                    count: 0,
+                    timerId: null
+                }
+            },
+            beforeCreate: function(){
+                console.log("beforeCreate");
+                // 데이터 초기화가 아직 안됐으므로 undefined임
+                console.log(this.count);
+            },
+            created: function(){
+                console.log("created");
+                let that = this
+                // 데이터에서 참조 가능
+                console.log(this.count);
+                // DOM 요소가 연결되지 않았으므로 undefined임
+                console.log(this.$el);
+                // 타이머 시작
+                this.timerId = setInterval(function(){
+                    that.count += 1
+                }, 1000)
+            },
+            mounted: function(){
+                console.log("mounted");
+                // DOM 요소가 연결됨
+                console.log(this.$el);
+            },
+            beforeDestroy: function(){
+                console.log("beforeDestory");
+                // 타이머 정리
+                clearInterval(this.timerId);
+            }
+        })
+        window.vm = vm
+    </script>
+</body>
+</html>

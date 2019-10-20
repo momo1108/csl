@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="example" :style="style">
+        <div id="exam"></div>
+        <fruit-title></fruit-title>
+        <fruit-dscr></fruit-dscr>
+        <fruit-table></fruit-table>
+    </div>
+    <script>
+        // 컴포넌트
+        Vue.component("fruit-title", {
+            template: "<h1>{{message}}</h1>",
+            data: function () {
+                return { message: "과일 목록" }
+            }
+        });
+        Vue.component("fruit-dscr", {
+            template: "<p>{{message}}</p>",
+            data: function () {
+                return { message: "각 계절 대표적 과일의 목록" }
+            }
+        });
+        Vue.component("fruit-table", {
+            template: `
+                <table :style="tableStyle">
+                    <table-head></table-head>
+                    <table-body></table-body>
+                </table>
+            `,
+            data: function () {
+                return {
+                    tableStyle: {
+                        width: "100%",
+                        borderCollapse: "collapse"
+                    }
+                }
+            }
+        })
+        Vue.component("table-head", {
+            template: `
+                <tr>
+                    <th :style="thStyle">
+                        계절
+                    </th>
+                    <th :style="thStyle">
+                        과일
+                    </th>
+                </tr>
+            `,
+            data: function () {
+                return {
+                    thStyle: {
+                        border: "1px solid grey",
+                        color: "red",
+                        background: "pink"
+                    }
+                }
+            }
+        })
+        Vue.component("table-body", {
+            template: `
+            <tbody>
+                <tr>
+                    <td :style="tdStyle">
+                        봄
+                    </td>
+                    <td :style="tdStyle">
+                        딸기
+                    </td>
+                </tr>
+                <tr>
+                    <td :style="tdStyle">
+                        여름
+                    </td>
+                    <td :style="tdStyle">
+                        수박
+                    </td>
+                </tr>
+                <tr>
+                    <td :style="tdStyle">
+                        가을
+                    </td>
+                    <td :style="tdStyle">
+                        포도
+                    </td>
+                </tr>
+                <tr>
+                    <td :style="tdStyle">
+                        겨울
+                    </td>
+                    <td :style="tdStyle">
+                        귤
+                    </td>
+                </tr>
+            </tbody>
+            `,
+            data: function () {
+                return {
+                    tdStyle: {
+                        border: "1px solid grey",
+                        color: "black"
+                    }
+                }
+            }
+        })
+
+        let FruitsListTitle = Vue.extend({
+            template: "<h1>과일 목록</h1>"
+        })
+
+        new FruitsListTitle().$mount("#exam");
+        
+        // 최상위 Vue 인스턴스 생성
+        new Vue({
+            el: '#example',
+            data: {
+                style: {
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    textAlign: "center"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="Test1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>
+            초기 숫자 : <span v-once v-text="count"></span><br>
+            현재의 숫자 : {{ count }} <br>
+            차이는 알아서 계산하세요
+        </h1>
+        <button v-on:click="plus">
+            플러스
+        </button>
+        <button v-on:click="minus">
+            마이너스
+        </button>
+    </div>
+</body>
+
+</html>

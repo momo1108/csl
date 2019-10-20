@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 400px;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ol>
+            <li v-for="(e,i) in items" v-bind:key="e.price">품목 : {{ e.name }} <br>가격 : {{ e.price | addwon }}<br>수량 : {{ e.quantity }}&nbsp;<button v-on:click="quantitycontroller(0,i)">+</button><button v-on:click="quantitycontroller(1,i)">-</button><br>직접 입력 : <input type="number" v-model="e.quantity" min="0"></li>
+        </ol>
+        최소 주문 가격 : 10000원 <br><br>
+        <input type="checkbox" v-model="showtotal" style="margin-bottom: 15px;"> 총 가격 보기
+        <p v-show="showtotal" style="text-align: right;">
+            {{ totalprice | addwon }}
+        </p>
+        <p v-show="!canBuy" v-bind:class="'dscr'" v-bind:style="errorStyle">
+            10000원 부터<br>주문이 가능합니다.
+        </p>
+        <button style="margin: 0 20%; width: 60%;" v-on:click="order" v-show="canBuy">주문하기</button>
+    </div>
+    <script src="Test2.js"></script>
+</body>
+</html>

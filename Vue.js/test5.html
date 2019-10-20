@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* table {
+            border: 1px solid black;
+        } */
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2 v-once>{{ "초기값 : "+count }}</h2>
+        <h2>{{ "현재값 : "+count }}</h2>
+        <button @click="count++">+</button>
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            data: {
+                count: 1
+            },
+            created() {
+                console.log("생성됨");
+            }
+        })
+        Vue.config.devtools = true;
+    </script>
+
+</body>
+
+</html>
