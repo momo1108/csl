@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,21 +19,35 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+
 <body>
-    <div id="app">
-        <ol>
-            <li v-for="(e,i) in items" v-bind:key="e.price">품목 : {{ e.name }} <br>가격 : {{ e.price | addwon }}<br>수량 : {{ e.quantity }}&nbsp;<button v-on:click="quantitycontroller(0,i)">+</button><button v-on:click="quantitycontroller(1,i)">-</button><br>직접 입력 : <input type="number" v-model="e.quantity" min="0"></li>
-        </ol>
-        최소 주문 가격 : 10000원 <br><br>
-        <input type="checkbox" v-model="showtotal" style="margin-bottom: 15px;"> 총 가격 보기
-        <p v-show="showtotal" style="text-align: right;">
-            {{ totalprice | addwon }}
-        </p>
-        <p v-show="!canBuy" v-bind:class="'dscr'" v-bind:style="errorStyle">
-            10000원 부터<br>주문이 가능합니다.
-        </p>
-        <button style="margin: 0 20%; width: 60%;" v-on:click="order" v-show="canBuy">주문하기</button>
+    <div id='app'>
+        <fieldset id="checkboxArea1">
+            <legend>알레르기 체크</legend>
+            <input type="checkbox" name="box" value="대두" v-model="alergen" /><label>대두</label>
+            <input type="checkbox" name="box" value="땅콩" v-model="alergen" /><label>땅콩</label>
+            <input type="checkbox" name="box" value="우유" v-model="alergen" /><label>우유</label>
+        </fieldset>
+        <fieldset id="checkboxArea2" v-if='moreZero'>
+            알러지 요인들 : <span v-html="alergen"></span>
+        </fieldset>
     </div>
-    <script src="Test2.js"></script>
+    <script type="text/javascript">
+        var model = {
+            alergen: []
+        };
+        var allergenes1 = new Vue({
+            el: '#app',
+            data: model,
+            computed: {
+                moreZero: function () {
+                    return this.alergen.length > 0
+                }
+            }
+        });
+        Vue.config.devtools = true;
+    </script>
+
 </body>
+
 </html>
