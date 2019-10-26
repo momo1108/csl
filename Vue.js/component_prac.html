@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id = "app">
+        <fruits-title></fruits-title>
+        <ol>
+            <fruits-items v-for="fruit in fruitsData" :fruits-list="fruit"></fruits-items>
+        </ol>
+    </div>
+    
+    <script>
+        Vue.component("fruits-title",{
+            template: "<h1>계절별 제철 과일 목록</h1>"
+        })
+        Vue.component("fruits-items",{
+            props: {
+                fruitsList: {
+                    type: Object,
+                    required: true
+                }
+            },
+            template: "<li>{{fruitsList.season}}의 제철 과일 : {{fruitsList.fruit}}</li>"
+        })
+        new Vue({
+            el: "#app",
+            data: {
+                fruitsData: [
+                    {season: "봄", fruit: "딸기"},
+                    {season: "여름", fruit: "수박"},
+                    {season: "가을", fruit: "포도"},
+                    {season: "겨율", fruit: "귤"},
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

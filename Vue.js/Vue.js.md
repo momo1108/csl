@@ -1626,6 +1626,10 @@ Vue.component("simple-counter", {
 
 ### 컴포넌트 간 통신
 
+ES-Lint 는 그냥 중간 컴파일러. VS Code에서 이걸 씀
+
+자바 스크립트와 Vue.js 의 arrow function은 모양은 같지만 다른 개념이 있다.  arrow function은 this 참조가 되지만, 그냥 function은 지역변수 개념으로 변해서 참조가 되지 않는다.
+
 Vue.js의 컴포넌트는 각기 독립된 유효범위를 가지고 있어 기본적으로는 컴포넌트 간에 데이터를 주고받을 수 없다.
 
 그러나 실제로는 컴포넌트끼리 데이터를 주고받지 않고는 구현할 수 없는 내용이 많다. 컴포넌트의 재사용성을 높이려면 컴포넌트 간의 데이터를 주고받을 일이 필요하다.  그렇지만 아무 제한 없이 데이터를 주고받는 것도 설계가 복잡해지는 원인이 된다.
@@ -1643,6 +1647,79 @@ Vue.js의 컴포넌트는 각기 독립된 유효범위를 가지고 있어 기�
 props는 부모 컴포넌트로부터 템플릿 속성(v-bind)을 경유해 전달받는다. 
 
 ```html
+<div id = "app">
+    <item-desc v-bind:item-name="myItem"></item-desc>
+</div>
 
+<script>
+    Vue.component("item-desc",{ // 컴포넌트 명
+        props: {
+            itemName: { // 부모로부터 전달받은 속성명
+            	type: String 혹은 Object 타입,
+            	// default: 기본값,
+            	// required: 필수 여부,
+            	// validator: 유효성 검사 함수
+        	}
+        }
+        // ..template 안에서 부모로부터 전달받은 속성 사용 가능
+        template: "<p>{{itemName}}은 편리해</p>"
+    })
+    new Vue({
+        el: "#app",
+        data: {myItem: "pen"}
+    })
+</script>
 ```
 
+여기서 주의할 점은 props를 v-bind로 전달해줄 때는 케밥 케이스로  명명하고 아래 컴포넌스 설정에서 props 이름을 설정해 줄 때는 카멜 케이스로 명명해야 한다.
+
+
+
+---
+
+#### 예제. 과일 이름 리스트
+
+```html
+<div id = "app">
+    <fruits-title></fruits-title>
+    <ol>
+        <fruits-items v-for="fruit in fruitsData" :fruits-list="fruit"></fruits-items>
+    </ol>
+</div>
+
+<script>
+	new Vue({
+        el: "#app",
+        data: {
+            fruitsData: [
+                {season: "봄", fruit: "딸기"},
+                {season: "여름", fruit: "수박"},
+                {season: "가을", fruit: "포도"},
+                {season: "겨율", fruit: "귤"},
+            ]
+        }
+    })
+    Vue.component("fruits-title",{
+        template: "<h1>계절별 제철 과일 목록</h1>"
+    })
+    Vue.component("fruits-items",{
+        props: {
+            fruitsList: {
+            	type: Object,
+            	required: true
+            }
+        },
+        template: "<li>{{fruitsList.season}}의 제철 과일 : {{fruitsList.fruit}}</li>"
+    })
+</script>
+```
+
+
+
+http-common.js 은 axios 관련 base url을 설정해놓기 위해 따로 만들어놓았다.
+
+
+
+
+
+Vuex가 컴포넌트가 생성될 때 id와 name쪽을 사용한다.

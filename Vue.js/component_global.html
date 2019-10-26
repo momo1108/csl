@@ -23,7 +23,7 @@
             data: function () {
                 return { message: "과일 목록" }
             }
-        });
+        })
         Vue.component("fruit-dscr", {
             template: "<p>{{message}}</p>",
             data: function () {
@@ -34,7 +34,7 @@
             template: `
                 <table :style="tableStyle">
                     <table-head></table-head>
-                    <table-body></table-body>
+                    <table-body :fruits-item="fruitsItems"></table-body>
                 </table>
             `,
             data: function () {
@@ -42,7 +42,8 @@
                     tableStyle: {
                         width: "100%",
                         borderCollapse: "collapse"
-                    }
+                    },
+                    fruitsItems: [{season: "봄", fruit: "딸기"},{season: "여름", fruit: "수박"},{season: "가을", fruit: "포도"},{season: "겨울", fruit: "귤"}],
                 }
             }
         })
@@ -68,38 +69,20 @@
             }
         })
         Vue.component("table-body", {
+            props: {
+                fruitsItem: {
+                    type: Object,
+                    required: true
+                }
+            },
             template: `
             <tbody>
-                <tr>
+                <tr v-for="e in fruitsItem" :key=e.season>
                     <td :style="tdStyle">
-                        봄
+                        {{e.season}}
                     </td>
                     <td :style="tdStyle">
-                        딸기
-                    </td>
-                </tr>
-                <tr>
-                    <td :style="tdStyle">
-                        여름
-                    </td>
-                    <td :style="tdStyle">
-                        수박
-                    </td>
-                </tr>
-                <tr>
-                    <td :style="tdStyle">
-                        가을
-                    </td>
-                    <td :style="tdStyle">
-                        포도
-                    </td>
-                </tr>
-                <tr>
-                    <td :style="tdStyle">
-                        겨울
-                    </td>
-                    <td :style="tdStyle">
-                        귤
+                        {{e.fruit}}
                     </td>
                 </tr>
             </tbody>
