@@ -20,12 +20,22 @@
             el: "#fruits-list",
             components: {
                 "fruits-list-title": {
-                    template: "<h1>과일 목록</h1>"
+                    template: "<h1 @click='go1'>과일 목록</h1>",
+                    methods:{
+                        go1(){
+                            console.log(this)
+                        }
+                    }
                 },
                 "fruit-dscr": {
-                    template: "<p>{{message}}</p>",
+                    template: "<p @click='go1'>{{message}}</p>",
                     data: function(){
                         return {message: "각 계절 대표적 과일의 목록"}
+                    },
+                    methods:{
+                        go1: ()=>{
+                            console.log(this)
+                        }
                     }
                 },
                 "fruit-table": {
