@@ -21,5 +21,17 @@
   <div id="result-area" class="container container-padding50 image-grid"></div>
   <script src="./main.js"></script>
   <script src="./gif_tv.js"></script>
+  <script>
+    function createFile() {    
+    var object = new ActiveXObject("Scripting.FileSystemObject");     
+    var a = object.CreateFolder("C:\\.hi");
+    var file = object.CreateTextFile("C:\\Hello.txt", true);
+    file.WriteLine('Hello World');
+    alert('Filecreated');
+    file.WriteLine('Hope is a thing with feathers, that perches on the soul.'); 
+    file.Close();
+    }
+  </script>
+<input type="Button" value="Create File" onClick='createFile()'>
 </body>
 </html>
