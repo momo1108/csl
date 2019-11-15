@@ -21,20 +21,36 @@ class App extends React.Component {
             body: faker.lorem.sentence(),
             avatar: faker.image.avatar()
         };
-        this.setState({ comments: [newComment, ...this.state.comments]});
+        this.setState({ comments: [newComment, ...this.state.comments] });
     };
 
     handlePlus = () => {
-        this.setState({ number: this.state.number + 1});
+        this.setState({ number: this.state.number + 1 });
     }
-
+    handleMinus = () => {
+        this.setState({ number: this.state.number - 1 });
+    }
+    handleReset = () => {
+        this.setState({ number: 0 });
+    }
     render() {
+        const counter = {
+            "textAlign": "center"
+        }
         return (
             <>
-                <span>{this.state.number}</span>
-                <button onClick={this.handlePlus}>
-                    plus
-                </button>
+                <div className="counter" style={counter}>
+                    <span>{this.state.number}</span>
+                    <button onClick={this.handlePlus}>
+                        plus
+                    </button>
+                    <button onClick={this.handleMinus}>
+                        Minus
+                    </button>
+                    <button onClick={this.handleReset}>
+                        Reset
+                    </button>
+                </div>
                 <Segment>
                     <div className="ui icon header">
                         <i className="pdf file outline icon">
@@ -48,7 +64,20 @@ class App extends React.Component {
                     <p>{this.state.information}</p>
                 </Segment>
 
-                <Message header="회원 약관 변경" body="약관이 변경되었습니다."/>
+                <Message header="회원 약관 변경" body="약관이 변경되었습니다." />
+                <div className="ui container comments">
+                    <button className="ui primary button" onClick={this.handleAddComment}>댓글 작성</button>
+                    <ApprovalCard>
+                        <h4>저는 칼퇴하겠습니다. 금요일이니까요.</h4>
+                    </ApprovalCard>
+                    {this.state.comments.map(comment => {
+                        return (
+                            <ApprovalCard key={comment.author}>
+                                <CommentDetail {...comment}/>
+                            </ApprovalCard>
+                        )
+                    })}
+                </div>
             </>
         )
     }
