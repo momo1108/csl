@@ -1,0 +1,22 @@
+.season-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+.season-display p {
+    padding: 0;
+    margin: 0;
+}
+.summer {
+    background-color: yellow;
+}
+.winter {
+    background-color: aqua;
+}
+.season-display.summer i {
+    color: red !important;
+}
+.season-display.winter i {
+    color: blue !important;
+}
