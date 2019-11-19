@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './component/SeasonDisplay';
 import Spinner from './component/Spinner';
+import keys from './component/key';
 
 // const App = () => {
 //     window.navigator.geolocation.getCurrentPosition(
@@ -46,6 +47,7 @@ class App extends React.Component {
             }
         )
         console.log(this.state)
+        console.log(key);
     }
     componentDidUpdate(){
         console.log('re-render되었음');

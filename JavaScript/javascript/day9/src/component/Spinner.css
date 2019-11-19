@@ -1,0 +1,9 @@
+.loadbox {
+    display: flex;
+    height: 440px;
+    justify-content: center;
+    align-items: center;
+}
+.loadbox p {
+    font-size: 25px;
+}

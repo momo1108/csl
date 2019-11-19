@@ -1,0 +1,30 @@
+.contents {
+    font-size: 1.2rem;
+}
+article {
+    align-items: center;
+}
+.grid-contents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.hidetemp {
+    display: none;
+}
+.weather {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.temparature {
+    font-size: 4rem;
+    cursor: pointer;
+}
+.clickable {
+    font-size: 2.5rem;
+    color: blue;
+}
+
+.additional-info {
+    font-size: 1.5rem
+}
