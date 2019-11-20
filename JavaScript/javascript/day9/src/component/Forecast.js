@@ -11,7 +11,7 @@ const Forecast = ({ forecast, unit }) => {
   const data = cut.map(e => {
     return {
       time: `${getHoursName(new Date(e.dt * 1000).getHours())}`,
-      temp: Math.round(unit === 'c' ? e.main.temp : e.main.temp * 9 / 5 + 32)
+      기온: Math.round(unit === 'c' ? e.main.temp : e.main.temp * 9 / 5 + 32)
     };
   });
 
@@ -19,12 +19,13 @@ const Forecast = ({ forecast, unit }) => {
   const responsiveWidth = () => {
     const maxWidth = 500;
     const width = window.innerWidth - 10;
+    console.log(width);
     return width > maxWidth? maxWidth : width;
   }
   return (
     <div className="forecast">
-      <LineChart width={responsiveWidth()} height={responsiveWidth()} data={data}>
-        <Line type="monotone" dataKey="temp"></Line>
+      <LineChart width={600} height={300} data={data}>
+        <Line type="monotone" dataKey="기온"></Line>
         <XAxis dataKey="time"></XAxis>
         <YAxis domain={["dataMin -2", "dataMax + 2"]}></YAxis>
         <Tooltip></Tooltip>

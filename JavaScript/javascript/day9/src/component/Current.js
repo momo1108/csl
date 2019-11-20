@@ -30,8 +30,8 @@ const Current = (props) => {
           </p>
         </article>
         <article className="additional-info">
-          <p>강수량</p>
-          <p>적설량</p>
+          <p>{rain && `강수량: ${rain['1h']}/hour`}</p>
+          <p>{rain && `적설량: ${snow['1h']}/hour`}</p>
           <p>습도</p>
           <p>풍속 : {wind.speed}m/s</p>
         </article>
