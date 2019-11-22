@@ -51,10 +51,12 @@ const ListWrapper = () => {
         const data = {
             completed: e.target.checked
         };
-        const targetTodo = todos.find(el => el.id === id);
-        targetTodo.completed = !targetTodo.completed;
+        // const targetTodo = todos.find(el => el.id === id);
+        // targetTodo.completed = !targetTodo.completed;
+        todos[idx].completed = e.target.checked;
         setTodos([...todos])
-        await Axios.patch(`${url}/${id}`,data);
+        await Axios.patch(`${url}/${id}`,{completed: data});
+        // https://reactjs.org/docs/events.html
     };
     useEffect(() => {
         getTodos();
